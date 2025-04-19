@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Plant Tamagotchi</title>
+  <link rel="manifest" href="/static/manifest.json"/>
+  <meta name="theme-color" content="#ffffff"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="Plant Tamagotchi"/>
+  <link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen">
+  <div class="max-w-md w-full bg-white rounded-2xl shadow-xl p-6 text-center space-y-6">
+    <img id="plant-img" src="/static/images/dark.png"
+         class="mx-auto w-48 h-48 transition-all duration-300 ease-in-out"/>
+
+    <div class="grid grid-cols-2 gap-4 text-sm text-gray-700">
+      <p>🌱 Moisture:    <span id="moisture"    class="font-medium">--</span>%</p>
+      <p>🌡️ Temperature: <span id="temperature" class="font-medium">--</span>°C</p>
+      <p>💧 Humidity:    <span id="humidity"    class="font-medium">--</span>%</p>
+      <p>☀️ Light:       <span id="light"       class="font-medium">--</span>%</p>
+      <p>😊 Mood:        <span id="mood"        class="font-medium">--</span></p>
+    </div>
+
+    <div id="message-box" class="bg-green-50 border border-green-200 rounded-lg p-4 text-left">
+      <div id="message" class="prose prose-sm text-gray-800 italic">
+        Waiting for mood change…
+      </div>
+    </div>
+
+    <button id="enable-tts"
+            class="mt-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+      Enable Voice
+    </button>
+  </div>
+
+  <script>
+    const imgMap = {
+      dark:         'dark.png',
+      light:        'light.png',
+      mood_cold:    'mood_cold.png',
+      mood_happy:   'mood_happy.png',
+      mood_hot:     'mood_hot.png',
+      mood_humid:   'mood_humid.png',
+      mood_thirsty: 'mood_thirsty.png'
+    };
+
+    let lastMood = null;
+    let ttsEnabled = false;
+
+    document.getElementById('enable-tts').addEventListener('click', () => {
+      speechSynthesis.speak(new SpeechSynthesisUtterance('Voice enabled'));
+      ttsEnabled = true;
+      document.getElementById('enable-tts').style.display = 'none';
+    });
+
+    async function fetchData() {
+      try {
+        const resp = await fetch(`/api/plant?t=${Date.now()}`);
+        const data = await resp.json();
+
+        document.getElementById('moisture').innerText    = data.light   ?? '--';
+        document.getElementById('temperature').innerText = data.temperature ?? '--';
+        document.getElementById('humidity').innerText    = data.humidity    ?? '--';
+        document.getElementById('light').innerText       = data.light       ?? '--';
+        document.getElementById('mood').innerText        = data.mood        ?? '--';
+
+        const mood = data.mood || 'dark';
+        document.getElementById('plant-img').src =
+          `/static/images/${imgMap[mood] || imgMap.dark}`;
+
+        if (mood !== lastMood) {
+          lastMood = mood;
+          const text = data.message || '_No message available._';
+          document.getElementById('message').innerHTML = marked.parse(text);
+          if (ttsEnabled && text.trim()) {
+            speechSynthesis.cancel();
+            speechSynthesis.speak(new SpeechSynthesisUtterance(text));
+          }
+        }
+      } catch (e) {
+        console.error("Error fetching plant data:", e);
+      }
+    }
+
+    fetchData();
+    setInterval(fetchData, 500);
+  </script>
+</body>
+</html>
