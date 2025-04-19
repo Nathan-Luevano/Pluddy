@@ -1,0 +1,48 @@
+# Plant Tamagotchi 🌱
+
+A playful “Tamagotchi” for your plant—reads real‑time sensor data over serial, determines your plant’s mood, and uses an Ollama AI model to generate friendly care tips. Built with Flask, Tailwind CSS, and the Ollama Python API.
+
+---
+
+## 🚀 Features
+
+- **Real‑time sensor streaming**  
+  Reads temperature, humidity, and light from a serial‑connected microcontroller.
+- **Mood detection**  
+  Classifies plant mood (hot, cold, thirsty, happy, etc.) based on sensor thresholds.
+- **AI‑generated feedback**  
+  Uses Ollama to craft a playful “plant speaks” line and a short care tip when mood changes.
+- **Web UI**  
+  Responsive single‑page app built with Tailwind CSS and marked.js for rich text.
+- **Voice output**  
+  Optional text‑to‑speech of the AI’s message.
+
+---
+
+## 📸 Screenshot
+
+![Plant Tamagotchi UI](./static/images/screenshot.png)  
+*UI updates live with sensor readings, mood icon, message box, and “Enable Voice” button.*
+
+---
+
+## 📋 Table of Contents
+
+1. [Demo](#-demo)  
+2. [Prerequisites](#-prerequisites)  
+3. [Installation](#-installation)  
+4. [Hardware Setup](#-hardware-setup)  
+5. [Configuration](#-configuration)  
+6. [Running the App](#-running-the-app)  
+7. [API Endpoints](#-api-endpoints)  
+8. [Project Structure](#-project-structure)  
+9. [Contributing](#-contributing)  
+10. [License](#-license)  
+
+---
+
+## 🎬 Demo
+
+1. Plug in your microcontroller (e.g. Arduino/ESP) sending JSON lines like:
+   ```json
+   {"temperature": 22.5, "humidity": 55, "light": 80}
