@@ -1,10 +1,10 @@
-# Plant Tamagotchi 🌱
+# PLUDDY
 
 A playful “Tamagotchi” for your plant—reads real‑time sensor data over serial, determines your plant’s mood, and uses an Ollama AI model to generate friendly care tips. Built with Flask, Tailwind CSS, and the Ollama Python API.
 
 ---
 
-## 🚀 Features
+## Features
 
 - **Real‑time sensor streaming**  
   Reads temperature, humidity, and light from a serial‑connected microcontroller.
