@@ -19,7 +19,7 @@ A playful “Tamagotchi” for your plant—reads real‑time sensor data over s
 
 ---
 
-## 📸 Screenshot
+## Screenshot
 
 ![Plant Tamagotchi UI](./static/images/screenshot.png)  
 *UI updates live with sensor readings, mood icon, message box, and “Enable Voice” button.*
