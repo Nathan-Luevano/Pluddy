@@ -23,26 +23,3 @@ A playful “Tamagotchi” for your plant—reads real‑time sensor data over s
 
 ![Plant Tamagotchi UI](./static/images/screenshot.png)  
 *UI updates live with sensor readings, mood icon, message box, and “Enable Voice” button.*
-
----
-
-## 📋 Table of Contents
-
-1. [Demo](#-demo)  
-2. [Prerequisites](#-prerequisites)  
-3. [Installation](#-installation)  
-4. [Hardware Setup](#-hardware-setup)  
-5. [Configuration](#-configuration)  
-6. [Running the App](#-running-the-app)  
-7. [API Endpoints](#-api-endpoints)  
-8. [Project Structure](#-project-structure)  
-9. [Contributing](#-contributing)  
-10. [License](#-license)  
-
----
-
-## 🎬 Demo
-
-1. Plug in your microcontroller (e.g. Arduino/ESP) sending JSON lines like:
-   ```json
-   {"temperature": 22.5, "humidity": 55, "light": 80}
